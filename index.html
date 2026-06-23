@@ -484,10 +484,10 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
 .ask-plus { font-size: 22px; color: var(--border); font-weight: 300; }
 
 /* ── Closing slide ── */
-#slide-20 { background: var(--ink); }
-#slide-20 .topbar-logo { color: var(--white); }
-#slide-20 .topbar-logo span { color: var(--orange); }
-#slide-20 .topbar-tag { color: rgba(255,255,255,0.4); }
+#slide-22 { background: var(--ink); }
+#slide-22 .topbar-logo { color: var(--white); }
+#slide-22 .topbar-logo span { color: var(--orange); }
+#slide-22 .topbar-tag { color: rgba(255,255,255,0.4); }
 
 /* ── Nav bar ── */
 #nav {
@@ -577,12 +577,13 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
 <!-- ══════════════════════════════════════
   SLIDE 1 — COVER
 ══════════════════════════════════════ -->
-<div class="slide active" id="slide-1">
-  <div class="cover-wrap">
-    <div class="label">University of Alberta — Entrepreneurship Funding Program</div>
-    <div class="cover-logo">Cater<span>Bridge</span></div>
-    <div class="cover-tagline">AI-powered catering marketplace for Canada — connecting customers with trusted caterers through intelligent discovery and seamless booking.</div>
-    <div class="cover-meta">
+<div class="slide active" id="slide-1" style="display:flex;flex-direction:row;">
+  <!-- Left: text -->
+  <div style="width:48%;display:flex;flex-direction:column;justify-content:center;padding:64px 48px 80px 64px;flex-shrink:0;">
+    <div class="label" style="margin-bottom:20px;">University of Alberta — Entrepreneurship Funding Program</div>
+    <div class="cover-logo" style="font-size:60px;">Cater<span>Bridge</span></div>
+    <div class="cover-tagline" style="font-size:17px;margin-bottom:40px;">AI-powered catering marketplace for Canada — connecting customers with trusted caterers through intelligent discovery and seamless booking.</div>
+    <div class="cover-meta" style="width:fit-content;margin-bottom:0;">
       <div class="meta-cell">
         <div class="meta-label">Founder</div>
         <div class="meta-val">Pranav NS</div>
@@ -596,20 +597,22 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
         <div class="meta-val">MVP Complete</div>
       </div>
       <div class="meta-cell">
-        <div class="meta-label">Launch Market</div>
+        <div class="meta-label">Market</div>
         <div class="meta-val">Edmonton, Canada</div>
       </div>
     </div>
-    <div class="ask-row">
-      <div class="ask-box">
-        <div class="ask-amount">$17,000 CAD</div>
-        <div class="ask-desc">Funding Request</div>
+  </div>
+  <!-- Right: screenshot -->
+  <div style="flex:1;background:var(--bg-dark);display:flex;align-items:center;justify-content:center;padding:48px 40px 80px;overflow:hidden;">
+    <div style="width:100%;max-width:560px;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.18),0 4px 16px rgba(0,0,0,0.08);border:1px solid var(--border);">
+      <!-- fake browser chrome -->
+      <div style="background:#F0F0F0;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #DCDCDC;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#FEBC2E;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#28C840;"></div>
+        <div style="flex:1;margin:0 12px;background:white;border-radius:4px;padding:4px 12px;font-size:11px;color:#888;border:1px solid #DDD;">caterbridge.pranavns.com</div>
       </div>
-      <div class="ask-plus">+</div>
-      <div class="ask-box">
-        <div class="ask-amount">$10,000 AWS</div>
-        <div class="ask-desc">Infrastructure Credits</div>
-      </div>
+      <img src="app_screenshot.png" alt="CaterBridge app" style="width:100%;display:block;">
     </div>
   </div>
 </div>
@@ -1517,31 +1520,31 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
       <div class="roadmap" style="margin-bottom:32px;">
         <div class="rm-col">
           <div class="rm-line done"></div>
-          <div class="rm-quarter">Q1 2025</div>
+          <div class="rm-quarter">Q3 2026</div>
           <div class="rm-text">Edmonton Launch</div>
           <div class="rm-desc">25 caterers &nbsp;·&nbsp; 500 users &nbsp;·&nbsp; Pilot</div>
         </div>
         <div class="rm-col">
-          <div class="rm-line done"></div>
-          <div class="rm-quarter">Q2 2025</div>
+          <div class="rm-line"></div>
+          <div class="rm-quarter future">Q4 2026</div>
           <div class="rm-text">Mobile App</div>
           <div class="rm-desc">iOS + Android &nbsp;·&nbsp; Referral program</div>
         </div>
         <div class="rm-col">
           <div class="rm-line"></div>
-          <div class="rm-quarter future">Q3 2025</div>
+          <div class="rm-quarter future">Q1 2027</div>
           <div class="rm-text">Calgary Entry</div>
           <div class="rm-desc">100 caterers &nbsp;·&nbsp; 3,000 users</div>
         </div>
         <div class="rm-col">
           <div class="rm-line"></div>
-          <div class="rm-quarter future">Q4 2025</div>
+          <div class="rm-quarter future">Q2 2027</div>
           <div class="rm-text">Alberta-Wide</div>
           <div class="rm-desc">Premium plan &nbsp;·&nbsp; B2B corporate</div>
         </div>
         <div class="rm-col">
           <div class="rm-line"></div>
-          <div class="rm-quarter future">2026</div>
+          <div class="rm-quarter future">Q3 2027</div>
           <div class="rm-text">Canada National</div>
           <div class="rm-desc">Vancouver, Toronto &nbsp;·&nbsp; 500+ caterers</div>
         </div>
@@ -1736,11 +1739,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
       </div>
       <div class="card">
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--bg-dark);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--muted);flex-shrink:0;">Co</div>
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--bg-dark);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--muted);flex-shrink:0;">SS</div>
           <div>
-            <div style="font-size:18px;font-weight:800;letter-spacing:-0.3px;color:var(--ink);">Co-Founder</div>
-            <div style="font-size:13px;color:var(--muted);font-weight:600;">CTO and Operations</div>
-            <div style="font-size:13px;color:var(--muted);">University of Alberta</div>
+            <div style="font-size:18px;font-weight:800;letter-spacing:-0.3px;color:var(--ink);">Sai Sriman</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:600;">Co-Founder and CTO</div>
+            <div style="font-size:13px;color:var(--muted);">University of British Columbia</div>
           </div>
         </div>
         <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Responsibilities</div>
