@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CaterBridge — UAlberta Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --orange: #F4622A;
+  --orange-dim: rgba(244, 98, 42, 0.1);
+  --bg: #FAFAF9;
+  --bg-dark: #F3F2F0;
+  --ink: #111111;
+  --ink2: #333333;
+  --muted: #777777;
+  --border: #E2E2E0;
+  --white: #FFFFFF;
+  --slide-w: 100vw;
+  --slide-h: 100vh;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #111;
+}
+
+/* ── Deck ── */
+#deck {
+  width: 100vw; height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Top bar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 64px 0;
+  flex-shrink: 0;
+}
+.topbar-logo {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+}
+.topbar-logo span { color: var(--orange); }
+.topbar-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Content area ── */
+.content {
+  flex: 1;
+  padding: 40px 64px 100px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Section label ── */
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 14px;
+}
+
+/* ── Headings ── */
+.h1 {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.08;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.h2 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.sub {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 620px;
+  font-weight: 400;
+}
+
+/* ── Divider ── */
+hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+/* ── Grid helpers ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+
+/* ── Card ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+.card-sm { padding: 16px 20px; }
+
+/* ── Stat box ── */
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.stat-num {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  color: var(--ink);
+  line-height: 1;
+}
+.stat-num.orange { color: var(--orange); }
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ── Check rows ── */
+.check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+.check-row:last-child { border-bottom: none; }
+.check-dot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid #CCCCCC;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.check-dot.yes {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+.check-dot.yes::after {
+  content: '';
+  width: 6px; height: 4px;
+  border-left: 1.5px solid white;
+  border-bottom: 1.5px solid white;
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
+}
+.check-dot.no {
+  background: var(--bg-dark);
+  border-color: var(--border);
+}
+
+/* ── Tag pill ── */
+.pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: var(--bg-dark);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.pill.active {
+  background: var(--orange-dim);
+  color: var(--orange);
+  border-color: transparent;
+}
+
+/* ── Table ── */
+.ptable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.ptable thead tr {
+  border-bottom: 2px solid var(--border);
+}
+.ptable th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ptable td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink2);
+  vertical-align: middle;
+}
+.ptable td:first-child { font-weight: 600; color: var(--ink); }
+.ptable td.green { color: #15803D; font-weight: 700; }
+.ptable td.muted { color: var(--muted); }
+.ptable td.orange { color: var(--orange); font-weight: 700; }
+.ptable tr:last-child td { border-bottom: none; }
+.ptable tr:hover td { background: var(--bg); }
+
+/* ── Bar chart ── */
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  height: 120px;
+}
+.bar-col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+.bar-fill {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: var(--orange);
+  opacity: 0.85;
+  min-height: 4px;
+}
+.bar-fill.dim { opacity: 0.3; }
+.bar-bottom { font-size: 12px; color: var(--muted); font-weight: 500; }
+.bar-top { font-size: 12px; font-weight: 700; color: var(--ink); }
+
+/* ── Horizontal bar ── */
+.hbar { display: flex; flex-direction: column; gap: 14px; }
+.hbar-row { display: flex; flex-direction: column; gap: 5px; }
+.hbar-label {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: var(--ink2); font-weight: 500;
+}
+.hbar-track {
+  height: 7px;
+  background: var(--bg-dark);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.hbar-fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: 4px;
+  opacity: 0.85;
+}
+
+/* ── Step flow ── */
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.flow-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  position: relative;
+}
+.flow-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 36px;
+  bottom: -20px;
+  width: 1px;
+  background: var(--border);
+}
+.flow-num {
+  width: 33px; height: 33px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+  background: var(--white);
+  position: relative; z-index: 1;
+}
+.flow-num.active-step {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.flow-body { padding: 5px 0 24px; }
+.flow-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.flow-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* ── Roadmap ── */
+.roadmap {
+  display: flex;
+  gap: 0;
+  position: relative;
+  margin-top: 8px;
+}
+.rm-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.rm-line {
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  margin-top: 16px;
+  position: relative;
+}
+.rm-line::before {
+  content: '';
+  position: absolute;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  top: -4px; left: 50%;
+  transform: translateX(-50%);
+}
+.rm-line.done {
+  background: var(--orange);
+}
+.rm-line.done::before {
+  background: var(--orange);
+}
+.rm-quarter {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--orange); margin-top: 12px;
+}
+.rm-quarter.future { color: var(--muted); }
+.rm-text { font-size: 13px; color: var(--ink2); margin-top: 4px; line-height: 1.4; font-weight: 500; }
+.rm-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+
+/* ── Orange accent card ── */
+.accent-card {
+  background: var(--orange-dim);
+  border: 1px solid rgba(244,98,42,0.2);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+.accent-card .h2 { color: var(--orange); }
+
+/* ── Phase bar ── */
+.phase-strip {
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.phase-seg {
+  flex: 1;
+  padding: 18px 16px;
+  border-right: 1px solid var(--border);
+}
+.phase-seg:last-child { border-right: none; }
+.phase-seg.active-phase { background: var(--orange-dim); }
+.phase-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.phase-q { font-size: 11px; font-weight: 600; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.phase-q.future { color: var(--muted); }
+.phase-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ── Competitive matrix ── */
+.matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
+.matrix th {
+  padding: 10px 12px; font-size: 11px;
+  font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted); text-align: center; border-bottom: 2px solid var(--border);
+}
+.matrix th:first-child { text-align: left; }
+.matrix th.cb-header { color: var(--orange); }
+.matrix td { padding: 11px 12px; border-bottom: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 13px; }
+.matrix td:first-child { text-align: left; font-weight: 600; color: var(--ink); }
+.matrix td.yes { color: var(--orange); font-weight: 700; }
+.matrix td.no { color: #CCCCCC; }
+.matrix td.partial { color: #AAAAAA; font-size: 12px; }
+.matrix tr:last-child td { border-bottom: none; }
+.matrix tr:hover td { background: var(--bg); }
+
+/* ── Big quote ── */
+.blockquote {
+  border-left: 3px solid var(--orange);
+  padding: 4px 0 4px 20px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  font-style: italic;
+}
+
+/* ── Cover specific ── */
+.cover-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 64px 90px;
+}
+.cover-logo {
+  font-size: 76px;
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.cover-logo span { color: var(--orange); }
+.cover-tagline {
+  font-size: 20px;
+  color: var(--muted);
+  font-weight: 400;
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+.cover-meta {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  width: fit-content;
+  margin-bottom: 32px;
+  background: var(--white);
+}
+.meta-cell {
+  padding: 16px 28px;
+  border-right: 1px solid var(--border);
+}
+.meta-cell:last-child { border-right: none; }
+.meta-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 4px; }
+.meta-val { font-size: 15px; font-weight: 700; color: var(--ink); }
+.meta-val.orange { color: var(--orange); }
+.ask-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.ask-box {
+  border: 1.5px solid var(--orange);
+  border-radius: 10px;
+  padding: 14px 24px;
+  background: var(--white);
+}
+.ask-amount {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--orange);
+  line-height: 1;
+}
+.ask-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.ask-plus { font-size: 22px; color: var(--border); font-weight: 300; }
+
+/* ── Closing slide ── */
+#slide-20 { background: var(--ink); }
+#slide-20 .topbar-logo { color: var(--white); }
+#slide-20 .topbar-logo span { color: var(--orange); }
+#slide-20 .topbar-tag { color: rgba(255,255,255,0.4); }
+
+/* ── Nav bar ── */
+#nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 54px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  z-index: 100;
+}
+.nav-left { display: flex; gap: 12px; align-items: center; }
+.nav-right { display: flex; gap: 12px; align-items: center; }
+.nav-btn {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink);
+  transition: background 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.nav-btn:hover { background: var(--bg-dark); border-color: #BBBBBB; }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-counter { font-size: 13px; color: var(--muted); font-weight: 500; }
+.nav-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+.prog-dots {
+  display: flex; gap: 4px; align-items: center;
+}
+.pdot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.pdot.cur {
+  background: var(--orange);
+  width: 16px;
+  border-radius: 3px;
+}
+
+/* ── Progress bar ── */
+#pbar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--orange);
+  transition: width 0.3s ease;
+  z-index: 101;
+}
+
+/* ── Keyboard hint ── */
+#hint {
+  position: fixed;
+  top: 20px; right: 28px;
+  font-size: 11px;
+  color: var(--muted);
+  display: flex; gap: 6px; align-items: center;
+  z-index: 99;
+}
+.kkey {
+  display: inline-block;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  background: var(--white);
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div id="pbar"></div>
+
+
+<div id="deck">
+
+<!-- ══════════════════════════════════════
+  SLIDE 1 — COVER
+══════════════════════════════════════ -->
+<div class="slide active" id="slide-1">
+  <div class="cover-wrap">
+    <div class="label">University of Alberta — Entrepreneurship Funding Program</div>
+    <div class="cover-logo">Cater<span>Bridge</span></div>
+    <div class="cover-tagline">AI-powered catering marketplace for Canada — connecting customers with trusted caterers through intelligent discovery and seamless booking.</div>
+    <div class="cover-meta">
+      <div class="meta-cell">
+        <div class="meta-label">Founder</div>
+        <div class="meta-val">Pranav NS</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">University</div>
+        <div class="meta-val">University of Alberta</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">Stage</div>
+        <div class="meta-val">MVP Complete</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">Launch Market</div>
+        <div class="meta-val">Edmonton, Canada</div>
+      </div>
+    </div>
+    <div class="ask-row">
+      <div class="ask-box">
+        <div class="ask-amount">$17,000 CAD</div>
+        <div class="ask-desc">Funding Request</div>
+      </div>
+      <div class="ask-plus">+</div>
+      <div class="ask-box">
+        <div class="ask-amount">$10,000 AWS</div>
+        <div class="ask-desc">Infrastructure Credits</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 2 — EXECUTIVE SUMMARY
+══════════════════════════════════════ -->
+<div class="slide" id="slide-2">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Executive Summary</div>
+  </div>
+  <div class="content">
+    <div class="label">02 — Executive Summary</div>
+    <div class="h2" style="font-size:40px;">What is CaterBridge?</div>
+    <div class="sub" style="margin-bottom:32px;">A digital marketplace connecting customers with verified caterers, meal providers, and tiffin services through a single platform — powered by AI.</div>
+    <div class="grid-3" style="margin-bottom:24px;">
+      <div class="card">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Problem</div>
+        <div style="font-size:15px;font-weight:700;color:var(--ink);line-height:1.4;">Catering discovery is fragmented, manual, and time-consuming</div>
+      </div>
+      <div class="card" style="border-color:var(--orange);border-width:1.5px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Solution</div>
+        <div style="font-size:15px;font-weight:700;color:var(--ink);line-height:1.4;">AI-powered marketplace — discover, compare, quote, and book in minutes</div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Vision</div>
+        <div style="font-size:15px;font-weight:700;color:var(--ink);line-height:1.4;">Canada's trusted platform for every catering and meal service need</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);">
+      <div style="flex:1;padding:20px 24px;border-right:1px solid var(--border);">
+        <div class="stat-label" style="margin-bottom:6px;">Platform simplifies</div>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--ink2);">
+          <div>Vendor discovery</div>
+          <div>Menu comparison</div>
+          <div>Booking management</div>
+          <div>Meal subscriptions</div>
+          <div>AI recommendations</div>
+        </div>
+      </div>
+      <div style="flex:1;padding:20px 24px;border-right:1px solid var(--border);">
+        <div class="stat-label" style="margin-bottom:6px;">Launch market</div>
+        <div style="font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;">Edmonton, AB</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">Scaling to all major Canadian cities</div>
+      </div>
+      <div style="flex:1;padding:20px 24px;border-right:1px solid var(--border);">
+        <div class="stat-label" style="margin-bottom:6px;">Funding ask</div>
+        <div style="font-size:22px;font-weight:800;color:var(--orange);letter-spacing:-0.5px;">$17K + $10K AWS</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">6-month pilot runway</div>
+      </div>
+      <div style="flex:1;padding:20px 24px;">
+        <div class="stat-label" style="margin-bottom:6px;">Stage</div>
+        <div style="font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;">MVP Complete</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">Website live and deployed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 3 — THE PROBLEM
+══════════════════════════════════════ -->
+<div class="slide" id="slide-3">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">The Problem</div>
+  </div>
+  <div class="content">
+    <div class="label">03 — The Problem</div>
+    <div class="h2">Catering discovery is broken.</div>
+    <div class="grid-2" style="margin-top:12px;">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Customer Pain</div>
+        <div class="check-row"><div class="check-dot no"></div>Search through dozens of disconnected websites</div>
+        <div class="check-row"><div class="check-dot no"></div>Compare pricing manually — takes hours or days</div>
+        <div class="check-row"><div class="check-dot no"></div>Wait days for responses with no transparency</div>
+        <div class="check-row"><div class="check-dot no"></div>No reliable way to verify reviews or vendor quality</div>
+        <div class="check-row"><div class="check-dot no"></div>No centralized booking or payment flow</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Caterer Pain</div>
+        <div class="check-row"><div class="check-dot no"></div>Rely entirely on word-of-mouth referrals</div>
+        <div class="check-row"><div class="check-dot no"></div>High marketing costs with poor ROI</div>
+        <div class="check-row"><div class="check-dot no"></div>No digital visibility or discoverability</div>
+        <div class="check-row"><div class="check-dot no"></div>Inefficient lead tracking and booking tools</div>
+        <div class="check-row"><div class="check-dot no"></div>No platform to build credibility at scale</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);margin-top:24px;">
+      <div style="flex:1;padding:20px 24px;border-right:1px solid var(--border);text-align:center;">
+        <div class="stat-num orange">3–5 hrs</div>
+        <div class="stat-label" style="margin-top:6px;">Average time spent finding a caterer for one event</div>
+      </div>
+      <div style="flex:1;padding:20px 24px;border-right:1px solid var(--border);text-align:center;">
+        <div class="stat-num orange">$0</div>
+        <div class="stat-label" style="margin-top:6px;">Dedicated online marketplaces for catering in Canada today</div>
+      </div>
+      <div style="flex:1;padding:20px 24px;text-align:center;">
+        <div class="stat-num orange">67%</div>
+        <div class="stat-label" style="margin-top:6px;">Customers dissatisfied with catering discovery experience</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 4 — MARKET PAIN / USER SCENARIO
+══════════════════════════════════════ -->
+<div class="slide" id="slide-4">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Real Scenario</div>
+  </div>
+  <div class="content">
+    <div class="label">04 — Real User Scenario</div>
+    <div class="h2">Planning a birthday party in Edmonton.</div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Without CaterBridge</div>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div style="display:flex;flex-direction:column;">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--bg-dark);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;">1</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Search Google</div><div style="font-size:12px;color:var(--muted);">20+ websites, inconsistent format</div></div>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--bg-dark);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;">2</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Contact vendors individually</div><div style="font-size:12px;color:var(--muted);">Email, call, WhatsApp — each separately</div></div>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--bg-dark);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;">3</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Wait 2–3 days</div><div style="font-size:12px;color:var(--muted);">No real-time availability or pricing</div></div>
+            </div>
+            <div style="padding:14px 18px;display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--bg-dark);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;">4</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Compare manually</div><div style="font-size:12px;color:var(--muted);">Spreadsheet, unverified reviews, hope for the best</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;background:var(--bg-dark);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:13px;font-weight:600;color:var(--muted);">Result: 3–5 hours of frustration. Sometimes days.</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">With CaterBridge</div>
+        <div class="card" style="padding:0;overflow:hidden;border-color:var(--orange);border-width:1.5px;">
+          <div style="display:flex;flex-direction:column;">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0;">1</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Enter event details once</div><div style="font-size:12px;color:var(--muted);">Type, date, guests, budget, cuisine</div></div>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0;">2</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">AI instantly recommends caterers</div><div style="font-size:12px;color:var(--muted);">Ranked by match score, reviews, price</div></div>
+            </div>
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0;">3</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Request quotes with one click</div><div style="font-size:12px;color:var(--muted);">Real-time responses from verified caterers</div></div>
+            </div>
+            <div style="padding:14px 18px;display:flex;gap:14px;align-items:center;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0;">4</div>
+              <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Book and pay securely</div><div style="font-size:12px;color:var(--muted);">Confirmation in under 10 minutes</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px;background:var(--orange-dim);border:1px solid rgba(244,98,42,0.2);border-radius:8px;padding:12px 16px;font-size:13px;font-weight:600;color:var(--orange);">Result: Done in under 10 minutes. Verified. Stress-free.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 5 — SOLUTION
+══════════════════════════════════════ -->
+<div class="slide" id="slide-5">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Solution</div>
+  </div>
+  <div class="content">
+    <div class="label">05 — The Solution</div>
+    <div class="h2">The CaterBridge Ecosystem</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">For Customers</div>
+        <div class="check-row"><div class="check-dot yes"></div>Discover verified caterers by location and cuisine</div>
+        <div class="check-row"><div class="check-dot yes"></div>Compare menus, pricing, and verified ratings</div>
+        <div class="check-row"><div class="check-dot yes"></div>Request instant quotes with one click</div>
+        <div class="check-row"><div class="check-dot yes"></div>Book and pay securely on platform</div>
+        <div class="check-row"><div class="check-dot yes"></div>Subscribe to weekly tiffin meal plans</div>
+        <div style="margin-top:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">For Caterers</div>
+        <div class="check-row"><div class="check-dot yes"></div>Manage digital profile and menus</div>
+        <div class="check-row"><div class="check-dot yes"></div>Receive qualified leads automatically</div>
+        <div class="check-row"><div class="check-dot yes"></div>Process bookings and track orders</div>
+        <div class="check-row"><div class="check-dot yes"></div>Build credibility with verified reviews</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Platform Flow</div>
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-num active-step">1</div>
+            <div class="flow-body">
+              <div class="flow-title">Customer enters event details</div>
+              <div class="flow-desc">Type, date, guest count, budget, cuisine preference</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num active-step">2</div>
+            <div class="flow-body">
+              <div class="flow-title">AI Recommendation Engine</div>
+              <div class="flow-desc">Multi-factor matching across verified vendor database</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num active-step">3</div>
+            <div class="flow-body">
+              <div class="flow-title">Browse and compare caterers</div>
+              <div class="flow-desc">Ranked results — menus, reviews, pricing, availability</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num active-step">4</div>
+            <div class="flow-body">
+              <div class="flow-title">Secure booking and payment</div>
+              <div class="flow-desc">Stripe-powered, instant confirmation</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num">5</div>
+            <div class="flow-body" style="padding-bottom:0;">
+              <div class="flow-title">Reviews and retention</div>
+              <div class="flow-desc">Verified reviews build the trust flywheel</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 6 — PRODUCT SCREENSHOTS
+══════════════════════════════════════ -->
+<div class="slide" id="slide-6" style="background:var(--bg-dark);">
+  <div class="topbar" style="background:var(--bg-dark);">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Live Product</div>
+  </div>
+  <div class="content">
+    <div class="label">06 — Product Demonstration</div>
+    <div class="h2">Built. Shipped. Working.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;flex:1;">
+
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="background:#F4622A;padding:20px;display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="font-size:18px;font-weight:800;color:white;line-height:1.3;">Find the perfect caterer for your next event</div>
+          <div style="background:white;border-radius:6px;padding:9px 14px;font-size:12px;color:#999;">Search caterers, cuisine or more</div>
+          <div style="display:flex;gap:16px;margin-top:4px;">
+            <div style="font-size:11px;color:rgba(255,255,255,0.85);font-weight:500;">58+ Caterers</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.85);font-weight:500;">Top Rated</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.85);font-weight:500;">1000+ Served</div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Homepage</div>
+          <div style="font-size:12px;color:var(--ink2);margin-top:2px;">Caterer discovery &amp; search</div>
+        </div>
+      </div>
+
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="padding:14px;flex:1;display:flex;flex-direction:column;gap:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;">
+              <div style="height:36px;background:linear-gradient(135deg,#2a4d2a,#1a2d1a);border-radius:4px;margin-bottom:6px;"></div>
+              <div style="font-size:11px;font-weight:700;color:var(--ink);">Hill Country Vegan</div>
+              <div style="font-size:10px;color:var(--orange);font-weight:600;">4.8 — $20/person</div>
+            </div>
+            <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;">
+              <div style="height:36px;background:linear-gradient(135deg,#2d1a2d,#1a0a2d);border-radius:4px;margin-bottom:6px;"></div>
+              <div style="font-size:11px;font-weight:700;color:var(--ink);">Golden Dragon Events</div>
+              <div style="font-size:10px;color:var(--orange);font-weight:600;">4.6 — $25/person</div>
+            </div>
+            <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;">
+              <div style="height:36px;background:linear-gradient(135deg,#2d1a0a,#1a0800);border-radius:4px;margin-bottom:6px;"></div>
+              <div style="font-size:11px;font-weight:700;color:var(--ink);">Spice Route</div>
+              <div style="font-size:10px;color:var(--orange);font-weight:600;">4.7 — $30/person</div>
+            </div>
+            <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;">
+              <div style="height:36px;background:linear-gradient(135deg,#1a1a2d,#0a0a1a);border-radius:4px;margin-bottom:6px;"></div>
+              <div style="font-size:11px;font-weight:700;color:var(--ink);">Le Petit Paris</div>
+              <div style="font-size:10px;color:var(--orange);font-weight:600;">4.8 — $35/person</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Vendor Browse</div>
+          <div style="font-size:12px;color:var(--ink2);margin-top:2px;">AI-matched results</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;flex:1;display:flex;flex-direction:column;">
+          <div style="background:#F4622A;padding:14px 16px;">
+            <div style="font-size:13px;font-weight:800;color:white;">Hi, Pranav NS</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.75);margin-bottom:10px;">Here are all your catering requests.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div style="background:white;border-radius:6px;padding:8px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;color:#111;">0</div>
+                <div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:0.5px;">Total</div>
+              </div>
+              <div style="background:white;border-radius:6px;padding:8px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;color:#111;">0</div>
+                <div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:0.5px;">Pending</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:12px 14px;border-top:1px solid var(--border);">
+            <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Dashboard</div>
+            <div style="font-size:12px;color:var(--ink2);margin-top:2px;">Order management</div>
+          </div>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;flex:1;display:flex;flex-direction:column;">
+          <div style="padding:14px 16px;flex:1;">
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px;">Tiffin Schedule</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div style="border:1px solid var(--orange);border-radius:6px;padding:8px;">
+                <div style="font-size:10px;font-weight:700;color:var(--ink);">This Week</div>
+                <div style="font-size:9px;color:var(--orange);font-weight:600;margin-top:2px;">CURRENT</div>
+              </div>
+              <div style="border:1px solid var(--border);border-radius:6px;padding:8px;">
+                <div style="font-size:10px;font-weight:700;color:var(--ink);">Next Week</div>
+                <div style="font-size:9px;color:var(--muted);margin-top:2px;">Jun 29 – Jul 5</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:12px 14px;border-top:1px solid var(--border);">
+            <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Tiffin Schedule</div>
+            <div style="font-size:12px;color:var(--ink2);margin-top:2px;">Weekly meal subscription</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 7 — AI INNOVATION
+══════════════════════════════════════ -->
+<div class="slide" id="slide-7">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">AI Innovation</div>
+  </div>
+  <div class="content">
+    <div class="label">07 — AI Innovation</div>
+    <div class="h2">Intelligence layer — our key differentiator.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <div style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px;">Unlike traditional directories, CaterBridge uses AI to surface the right caterer instantly — no scrolling, no guesswork.</div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">User inputs</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;">
+          <div class="card card-sm"><div style="font-size:13px;font-weight:600;">Event Type</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Wedding, corporate, birthday...</div></div>
+          <div class="card card-sm"><div style="font-size:13px;font-weight:600;">Budget Range</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Per person or total budget</div></div>
+          <div class="card card-sm"><div style="font-size:13px;font-weight:600;">Guest Count</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">10 to 1000+ guests</div></div>
+          <div class="card card-sm"><div style="font-size:13px;font-weight:600;">Cuisine Preference</div><div style="font-size:12px;color:var(--muted);margin-top:2px;">Indian, Italian, Canadian...</div></div>
+        </div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Current AI features</div>
+        <div class="check-row"><div class="check-dot yes"></div>Smart vendor matching algorithm</div>
+        <div class="check-row"><div class="check-dot yes"></div>Budget-aware recommendations</div>
+        <div class="check-row"><div class="check-dot yes"></div>Cuisine and dietary preference matching</div>
+        <div class="check-row"><div class="check-dot yes"></div>Gemini-powered AI support chatbot</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">How the engine works</div>
+        <div class="flow">
+          <div class="flow-item">
+            <div class="flow-num active-step">1</div>
+            <div class="flow-body">
+              <div class="flow-title">Input collection</div>
+              <div class="flow-desc">Event details, preferences, and constraints captured in a simple form</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num active-step">2</div>
+            <div class="flow-body">
+              <div class="flow-title">Multi-factor scoring</div>
+              <div class="flow-desc">AI scores each caterer across budget, cuisine, ratings, and availability</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num active-step">3</div>
+            <div class="flow-body">
+              <div class="flow-title">Ranked recommendations</div>
+              <div class="flow-desc">Top-fit caterers surfaced instantly with match percentage</div>
+            </div>
+          </div>
+          <div class="flow-item">
+            <div class="flow-num">4</div>
+            <div class="flow-body" style="padding-bottom:0;">
+              <div class="flow-title">Continuous learning</div>
+              <div class="flow-desc">Every booking makes future recommendations smarter — data moat grows over time</div>
+            </div>
+          </div>
+        </div>
+        <div class="accent-card" style="margin-top:20px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--orange);margin-bottom:6px;">Roadmap</div>
+          <div style="font-size:13px;color:var(--ink2);line-height:1.6;">AI event planner &nbsp;·&nbsp; Predictive recommendations &nbsp;·&nbsp; Automated support &nbsp;·&nbsp; Dynamic pricing</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 8 — MARKET SIZE
+══════════════════════════════════════ -->
+<div class="slide" id="slide-8">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Market Opportunity</div>
+  </div>
+  <div class="content">
+    <div class="label">08 — Market Opportunity</div>
+    <div class="h2">Large, growing, and untapped in Canada.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card" style="border-left:3px solid #E2E2E0;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">TAM — Total Addressable Market</div>
+            <div style="font-size:38px;font-weight:900;letter-spacing:-1.5px;color:var(--ink);">$4.8B</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:3px;">Canadian food service and catering market (2024)</div>
+          </div>
+          <div class="card" style="border-left:3px solid #BBBBBB;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">SAM — Serviceable Addressable</div>
+            <div style="font-size:38px;font-weight:900;letter-spacing:-1.5px;color:var(--ink);">$820M</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:3px;">Event catering and meal subscriptions, Alberta + BC + Ontario</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--orange);">
+            <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:6px;">SOM — Serviceable Obtainable</div>
+            <div style="font-size:38px;font-weight:900;letter-spacing:-1.5px;color:var(--orange);">$12M</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:3px;">Edmonton and Calgary pilot market, Year 1–2 target</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Target segments</div>
+        <table class="ptable" style="margin-bottom:20px;">
+          <thead><tr><th>Segment</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td>Weddings and receptions</td><td><span class="pill active">High</span></td></tr>
+            <tr><td>Corporate events</td><td><span class="pill active">High</span></td></tr>
+            <tr><td>Daily meal subscriptions</td><td><span class="pill active">High</span></td></tr>
+            <tr><td>University campus events</td><td><span class="pill">Medium</span></td></tr>
+            <tr><td>Birthday celebrations</td><td><span class="pill">Medium</span></td></tr>
+            <tr><td>Community gatherings</td><td><span class="pill">Growing</span></td></tr>
+          </tbody>
+        </table>
+        <div class="card card-sm">
+          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">Why now?</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.6;">Digital-first consumers &nbsp;·&nbsp; AI matching is mainstream &nbsp;·&nbsp; Local service marketplaces growing &nbsp;·&nbsp; Zero dedicated platforms in Canada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 9 — COMPETITIVE ANALYSIS
+══════════════════════════════════════ -->
+<div class="slide" id="slide-9">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Competitive Landscape</div>
+  </div>
+  <div class="content">
+    <div class="label">09 — Competitive Landscape</div>
+    <div class="h2">We win on every dimension that matters.</div>
+    <div style="margin-top:16px;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th style="width:220px;">Feature</th>
+            <th class="cb-header">CaterBridge</th>
+            <th>Google Search</th>
+            <th>Local Directories</th>
+            <th>Social Media</th>
+            <th>Thumbtack</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI-powered matching</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="partial">Partial</td>
+          </tr>
+          <tr>
+            <td>Catering-focused platform</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="partial">Partial</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+          </tr>
+          <tr>
+            <td>Integrated booking system</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="partial">Partial</td>
+          </tr>
+          <tr>
+            <td>Instant quote requests</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="yes">Yes</td>
+          </tr>
+          <tr>
+            <td>Meal subscription plans</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="partial">Limited</td>
+            <td class="no">No</td>
+          </tr>
+          <tr>
+            <td>Verified caterer profiles</td>
+            <td class="yes">Yes</td>
+            <td class="partial">Partial</td>
+            <td class="partial">Partial</td>
+            <td class="no">No</td>
+            <td class="yes">Yes</td>
+          </tr>
+          <tr>
+            <td>Secure in-platform payments</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="partial">Partial</td>
+          </tr>
+          <tr>
+            <td>AI support chatbot</td>
+            <td class="yes">Yes</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+            <td class="no">No</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-2" style="margin-top:14px;">
+      <div class="card card-sm" style="border-color:var(--orange);">
+        <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;">Key insight</div>
+        <div style="font-size:13px;color:var(--ink2);">No platform in Canada offers AI-powered catering discovery with integrated booking and meal subscriptions.</div>
+      </div>
+      <div class="card card-sm">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;">Defensible moat</div>
+        <div style="font-size:13px;color:var(--ink2);">Network effects — more caterers improves recommendations, attracts more users, attracts more caterers.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 10 — BUSINESS MODEL
+══════════════════════════════════════ -->
+<div class="slide" id="slide-10">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Business Model</div>
+  </div>
+  <div class="content">
+    <div class="label">10 — Business Model</div>
+    <div class="h2">Diversified revenue from day one.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <table class="ptable">
+          <thead>
+            <tr><th>Revenue Stream</th><th>Model</th><th>Timing</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Booking Commission</td><td>10% per booking</td><td><span class="pill active">Launch</span></td></tr>
+            <tr><td>Featured Listings</td><td>$49–$149 / month</td><td><span class="pill active">Launch</span></td></tr>
+            <tr><td>Premium Vendor Plans</td><td>$199–$499 / month</td><td><span class="pill">Q2</span></td></tr>
+            <tr><td>Meal Subscription Commissions</td><td>5% per subscription</td><td><span class="pill">Q2</span></td></tr>
+            <tr><td>Sponsored Placement</td><td>CPM / CPC</td><td><span class="pill">Q3</span></td></tr>
+          </tbody>
+        </table>
+        <div class="card" style="margin-top:14px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Unit Economics (Year 1 Target)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="stat"><div class="stat-num" style="font-size:28px;">$350</div><div class="stat-label">Avg. booking value (CAD)</div></div>
+            <div class="stat"><div class="stat-num" style="font-size:28px;">10%</div><div class="stat-label">Commission per booking</div></div>
+            <div class="stat"><div class="stat-num orange" style="font-size:28px;">25</div><div class="stat-label">Target caterers Year 1</div></div>
+            <div class="stat"><div class="stat-num orange" style="font-size:28px;">500</div><div class="stat-label">Target users Year 1</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Revenue mix (Year 2 target)</div>
+        <div class="hbar">
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Booking Commissions</span><span style="font-weight:700;color:var(--ink);">70%</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:70%;"></div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Premium Vendor Plans</span><span style="font-weight:700;color:var(--ink);">20%</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:20%;opacity:0.6;"></div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Ads and Listings</span><span style="font-weight:700;color:var(--ink);">10%</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:10%;opacity:0.4;"></div></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:20px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Gross Margin Profile</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.7;">Platform commissions are high-margin. Primary costs are cloud infrastructure, customer acquisition, and support. No inventory, no delivery logistics — pure marketplace model.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 11 — GO-TO-MARKET
+══════════════════════════════════════ -->
+<div class="slide" id="slide-11">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Go-To-Market</div>
+  </div>
+  <div class="content">
+    <div class="label">11 — Go-To-Market Strategy</div>
+    <div class="h2">Edmonton first. Canada next.</div>
+    <div style="margin-top:16px;">
+      <div class="phase-strip" style="margin-bottom:20px;">
+        <div class="phase-seg active-phase">
+          <div class="phase-q">Q1 2025</div>
+          <div class="phase-title">Edmonton Pilot</div>
+          <div class="phase-desc">25 caterers, 500 users — prove the model with real traction</div>
+        </div>
+        <div class="phase-seg">
+          <div class="phase-q future">Q2–Q3 2025</div>
+          <div class="phase-title">Alberta Expansion</div>
+          <div class="phase-desc">Calgary entry, mobile app launch, referral program</div>
+        </div>
+        <div class="phase-seg">
+          <div class="phase-q future">Q4 2025</div>
+          <div class="phase-title">Alberta-Wide</div>
+          <div class="phase-desc">100+ caterers, 3,000 users, premium plan launch</div>
+        </div>
+        <div class="phase-seg">
+          <div class="phase-q future">2026</div>
+          <div class="phase-title">Canada National</div>
+          <div class="phase-desc">Vancouver, Toronto, Montreal — 500+ caterers</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Customer acquisition channels</div>
+          <div class="check-row"><div class="check-dot yes"></div>University of Alberta student and faculty networks — free, high trust</div>
+          <div class="check-row"><div class="check-dot yes"></div>Social media (Instagram, TikTok) — low-cost, high-reach</div>
+          <div class="check-row"><div class="check-dot yes"></div>Community partnerships and local events</div>
+          <div class="check-row"><div class="check-dot yes"></div>Referral and word-of-mouth program</div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Caterer acquisition strategy</div>
+          <div class="check-row"><div class="check-dot yes"></div>Direct outreach to local Edmonton caterers</div>
+          <div class="check-row"><div class="check-dot yes"></div>Local business association partnerships</div>
+          <div class="check-row"><div class="check-dot yes"></div>Free tier with premium upsell (freemium model)</div>
+          <div class="check-row"><div class="check-dot yes"></div>Founder's network in South Asian food community</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 12 — VALIDATION
+══════════════════════════════════════ -->
+<div class="slide" id="slide-12">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Validation</div>
+  </div>
+  <div class="content">
+    <div class="label">12 — Validation</div>
+    <div class="h2">Not just an idea — we've built it.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">MVP — Completed</div>
+        <div class="check-row"><div class="check-dot yes"></div>Full-stack web application built and deployed</div>
+        <div class="check-row"><div class="check-dot yes"></div>Core marketplace: search, browse, profiles, quotes, bookings</div>
+        <div class="check-row"><div class="check-dot yes"></div>AI recommendation engine and Gemini chatbot live</div>
+        <div class="check-row"><div class="check-dot yes"></div>Tiffin subscription interface built and tested</div>
+        <div class="check-row"><div class="check-dot yes"></div>Stripe payment integration configured</div>
+        <div class="check-row"><div class="check-dot yes"></div>Custom domain live: caterbridge.pranavns.com</div>
+        <div class="check-row"><div class="check-dot yes"></div>AWS EC2 backend with Grafana Loki monitoring</div>
+        <div style="margin-top:20px;">
+          <div class="accent-card">
+            <div style="font-size:13px;font-weight:700;color:var(--orange);margin-bottom:6px;">After funding</div>
+            <div style="font-size:13px;color:var(--ink2);line-height:1.6;">Return to Edmonton — full product polish, mobile app development, vendor acquisition, Edmonton pilot launch.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Tech stack</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+          <div class="card card-sm" style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">Frontend</div>
+            <div style="font-size:13px;color:var(--muted);">React.js &nbsp;·&nbsp; Vercel</div>
+          </div>
+          <div class="card card-sm" style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">Backend</div>
+            <div style="font-size:13px;color:var(--muted);">Node.js &nbsp;·&nbsp; Express &nbsp;·&nbsp; MongoDB</div>
+          </div>
+          <div class="card card-sm" style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">Infrastructure</div>
+            <div style="font-size:13px;color:var(--muted);">AWS EC2 &nbsp;·&nbsp; Grafana Loki</div>
+          </div>
+          <div class="card card-sm" style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;font-weight:600;color:var(--ink);">AI / Integrations</div>
+            <div style="font-size:13px;color:var(--muted);">Google Gemini &nbsp;·&nbsp; Stripe &nbsp;·&nbsp; JWT</div>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Validation milestones</div>
+        <div class="check-row"><div class="check-dot yes"></div>Problem validated through personal experience and research</div>
+        <div class="check-row"><div class="check-dot yes"></div>Market gap confirmed — no comparable Canadian platform</div>
+        <div class="check-row"><div class="check-dot yes"></div>Technical feasibility proven with working, deployed MVP</div>
+        <div class="check-row"><div class="check-dot yes"></div>Business model validated against comparable marketplace platforms</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 13 — TRACTION
+══════════════════════════════════════ -->
+<div class="slide" id="slide-13">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Traction</div>
+  </div>
+  <div class="content">
+    <div class="label">13 — Traction</div>
+    <div class="h2">Early signals and projected growth.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Current status</div>
+        <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);margin-bottom:16px;">
+          <div style="flex:1;padding:18px 20px;border-right:1px solid var(--border);text-align:center;">
+            <div class="stat-num orange" style="font-size:28px;">MVP</div>
+            <div class="stat-label">Built and deployed</div>
+          </div>
+          <div style="flex:1;padding:18px 20px;border-right:1px solid var(--border);text-align:center;">
+            <div class="stat-num" style="font-size:28px;">2</div>
+            <div class="stat-label">Co-founders</div>
+          </div>
+          <div style="flex:1;padding:18px 20px;text-align:center;">
+            <div class="stat-num orange" style="font-size:28px;">5+</div>
+            <div class="stat-label">Core features live</div>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Year 1 KPIs after launch</div>
+        <div class="card card-sm" style="margin-bottom:0;">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">
+              <span style="color:var(--muted);">Caterers onboarded</span><span style="font-weight:700;color:var(--ink);">25+</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">
+              <span style="color:var(--muted);">Active users</span><span style="font-weight:700;color:var(--ink);">500+</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">
+              <span style="color:var(--muted);">Bookings completed</span><span style="font-weight:700;color:var(--ink);">100+</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;">
+              <span style="color:var(--muted);">GMV target</span><span style="font-weight:700;color:var(--orange);">$35,000+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Projected user growth</div>
+        <div class="card">
+          <div class="bars" style="height:130px;align-items:flex-end;">
+            <div class="bar-col">
+              <div class="bar-top">0</div>
+              <div class="bar-fill dim" style="height:3%;"></div>
+              <div class="bar-bottom">Launch</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-top">500</div>
+              <div class="bar-fill" style="height:20%;"></div>
+              <div class="bar-bottom">Q1</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-top">1.5K</div>
+              <div class="bar-fill" style="height:42%;"></div>
+              <div class="bar-bottom">Q2</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-top">4K</div>
+              <div class="bar-fill" style="height:68%;"></div>
+              <div class="bar-bottom">Q3</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-top">8K</div>
+              <div class="bar-fill" style="height:100%;"></div>
+              <div class="bar-bottom">Q4</div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:14px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Why these numbers are achievable</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">University of Alberta has 40,000+ students. Edmonton has no dedicated catering platform. Even 0.5% of UAlberta community reaches 200 users in week one.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 14 — FINANCIALS
+══════════════════════════════════════ -->
+<div class="slide" id="slide-14">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Financial Projections</div>
+  </div>
+  <div class="content">
+    <div class="label">14 — Financial Projections</div>
+    <div class="h2">Conservative projections based on market data.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <table class="ptable" style="margin-bottom:16px;">
+          <thead><tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr></thead>
+          <tbody>
+            <tr><td>Active Users</td><td>500</td><td>5,000</td><td>25,000</td></tr>
+            <tr><td>Caterers</td><td>25</td><td>150</td><td>500</td></tr>
+            <tr><td>Bookings / Month</td><td>50</td><td>400</td><td>2,000</td></tr>
+            <tr><td>Avg. Booking Value</td><td>$350</td><td>$400</td><td>$450</td></tr>
+            <tr><td>Revenue</td><td class="orange">$21K</td><td class="orange">$192K</td><td class="orange">$1.1M</td></tr>
+          </tbody>
+        </table>
+        <div class="card card-sm">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Key assumptions</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">Avg. booking value $350 CAD &nbsp;·&nbsp; Commission 10% &nbsp;·&nbsp; Monthly caterer growth 5–10 &nbsp;·&nbsp; Organic user growth 15–20% MoM &nbsp;·&nbsp; Premium plan conversion 20%</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Revenue growth trajectory</div>
+        <div class="card" style="margin-bottom:14px;">
+          <div class="bars" style="height:120px;align-items:flex-end;">
+            <div class="bar-col">
+              <div class="bar-top" style="font-size:11px;">$21K</div>
+              <div class="bar-fill dim" style="height:6%;"></div>
+              <div class="bar-bottom">Y1</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-top" style="font-size:11px;">$192K</div>
+              <div class="bar-fill" style="height:35%;opacity:0.65;"></div>
+              <div class="bar-bottom">Y2</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-top" style="font-size:11px;">$1.1M</div>
+              <div class="bar-fill" style="height:100%;"></div>
+              <div class="bar-bottom">Y3</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);">
+          <div style="flex:1;padding:16px 18px;border-right:1px solid var(--border);">
+            <div class="stat-num orange" style="font-size:26px;">~80%</div>
+            <div class="stat-label">Gross margin (marketplace model)</div>
+          </div>
+          <div style="flex:1;padding:16px 18px;">
+            <div class="stat-num orange" style="font-size:26px;">Y2</div>
+            <div class="stat-label">Target for break-even operations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 15 — GROWTH STRATEGY
+══════════════════════════════════════ -->
+<div class="slide" id="slide-15">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Growth Strategy</div>
+  </div>
+  <div class="content">
+    <div class="label">15 — Growth Strategy</div>
+    <div class="h2">Built to scale from Edmonton to the world.</div>
+    <div style="margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">12-month roadmap</div>
+      <div class="roadmap" style="margin-bottom:32px;">
+        <div class="rm-col">
+          <div class="rm-line done"></div>
+          <div class="rm-quarter">Q1 2025</div>
+          <div class="rm-text">Edmonton Launch</div>
+          <div class="rm-desc">25 caterers &nbsp;·&nbsp; 500 users &nbsp;·&nbsp; Pilot</div>
+        </div>
+        <div class="rm-col">
+          <div class="rm-line done"></div>
+          <div class="rm-quarter">Q2 2025</div>
+          <div class="rm-text">Mobile App</div>
+          <div class="rm-desc">iOS + Android &nbsp;·&nbsp; Referral program</div>
+        </div>
+        <div class="rm-col">
+          <div class="rm-line"></div>
+          <div class="rm-quarter future">Q3 2025</div>
+          <div class="rm-text">Calgary Entry</div>
+          <div class="rm-desc">100 caterers &nbsp;·&nbsp; 3,000 users</div>
+        </div>
+        <div class="rm-col">
+          <div class="rm-line"></div>
+          <div class="rm-quarter future">Q4 2025</div>
+          <div class="rm-text">Alberta-Wide</div>
+          <div class="rm-desc">Premium plan &nbsp;·&nbsp; B2B corporate</div>
+        </div>
+        <div class="rm-col">
+          <div class="rm-line"></div>
+          <div class="rm-quarter future">2026</div>
+          <div class="rm-text">Canada National</div>
+          <div class="rm-desc">Vancouver, Toronto &nbsp;·&nbsp; 500+ caterers</div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Network Effects</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.6;">More caterers improves recommendations, attracts more users, drives more revenue, attracts more caterers — self-reinforcing flywheel.</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Platform Expansion</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.6;">Event planners, decorators, photographers, venue booking — CaterBridge becomes the end-to-end event services platform.</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">AI Moat Deepens</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.6;">Every booking makes recommendations smarter. Data advantage grows continuously, making CaterBridge increasingly difficult to replicate.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 16 — UNFAIR ADVANTAGE
+══════════════════════════════════════ -->
+<div class="slide" id="slide-16">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Unfair Advantage</div>
+  </div>
+  <div class="content">
+    <div class="label">16 — Unfair Advantage</div>
+    <div class="h2">Why we are uniquely positioned to win.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card" style="border-color:var(--orange);border-width:1.5px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--orange);margin-bottom:10px;">First-mover in Canada</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.65;">There is no dedicated catering marketplace in Canada today. We are not entering a crowded market — we are creating the category. The first platform to establish trust and network effects wins.</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Already built — not a concept</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.65;">Most early-stage applicants present ideas. We present a working, deployed product with AI, payments, booking, and subscriptions live. This is months of competitive lead time.</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Supply-side network advantage</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.65;">The founder's South Asian diaspora network gives direct, warm access to the highest-density segment of Edmonton's catering market — the exact caterers hardest for a competitor to reach quickly.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">University of Alberta as launchpad</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.65;">40,000+ students, faculty events, international student community, and campus dining are all immediately addressable. No other founder has this inside access to Edmonton's highest-density user base.</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">AI moat compounds over time</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.65;">Every booking generates data that makes the recommendation engine smarter. A competitor starting today will always be behind on data quality — this lead widens, not narrows, over time.</div>
+        </div>
+        <div class="accent-card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--orange);margin-bottom:8px;">The bottom line</div>
+          <div style="font-size:14px;color:var(--ink2);line-height:1.65;">First mover &nbsp;·&nbsp; Working product &nbsp;·&nbsp; Insider network &nbsp;·&nbsp; Campus launchpad &nbsp;·&nbsp; Data flywheel. Each is an advantage. Together, they are a defensible moat.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 17 — RISKS AND MITIGATION
+══════════════════════════════════════ -->
+<div class="slide" id="slide-17">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Risks and Mitigation</div>
+  </div>
+  <div class="content">
+    <div class="label">17 — Risks and Mitigation</div>
+    <div class="h2">We have identified the risks and planned for them.</div>
+    <div style="margin-top:16px;background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+      <table class="ptable">
+        <thead>
+          <tr>
+            <th style="width:220px;">Risk</th>
+            <th style="width:120px;">Likelihood</th>
+            <th>Mitigation Strategy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cold start — low caterer supply at launch</td>
+            <td><span class="pill active">High</span></td>
+            <td style="font-size:13px;color:var(--ink2);">Pre-onboard 10–15 caterers before public launch using founder's personal network. Offer free premium listing for first 6 months to early adopters.</td>
+          </tr>
+          <tr>
+            <td>Customer trust in unverified vendors</td>
+            <td><span class="pill active">High</span></td>
+            <td style="font-size:13px;color:var(--ink2);">Manual vetting process for all caterers before listing. Verified reviews only from confirmed bookings. Clear refund and dispute policy.</td>
+          </tr>
+          <tr>
+            <td>Slow user growth in early months</td>
+            <td><span class="pill">Medium</span></td>
+            <td style="font-size:13px;color:var(--ink2);">Partner with UAlberta student groups and clubs for sponsored events. Referral incentives ($20 credit per referral). Targeted Instagram and TikTok campaigns.</td>
+          </tr>
+          <tr>
+            <td>Large competitor enters Canada</td>
+            <td><span class="pill">Medium</span></td>
+            <td style="font-size:13px;color:var(--ink2);">First-mover data advantage and deep local relationships are hard to replicate quickly. Focus on local trust and community ties that large platforms cannot match.</td>
+          </tr>
+          <tr>
+            <td>Small founding team bandwidth</td>
+            <td><span class="pill">Medium</span></td>
+            <td style="font-size:13px;color:var(--ink2);">Prioritize ruthlessly — Edmonton launch only, no scope creep. Use funding to hire one part-time operations hire in Q2. Leverage UAlberta mentors for guidance.</td>
+          </tr>
+          <tr>
+            <td>Caterer no-shows or service failures</td>
+            <td><span class="pill">Low</span></td>
+            <td style="font-size:13px;color:var(--ink2);">Escrow payments released only after service confirmation. Customer support SLA of 24 hours. Repeat offenders removed from platform.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card card-sm" style="margin-top:14px;">
+      <div style="font-size:13px;color:var(--muted);line-height:1.65;">We do not view these as blockers — they are known variables with clear playbooks. Every marketplace faces a cold start. The ones that survive are the ones who plan for it. We have.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 18 — IMPACT
+══════════════════════════════════════ -->
+<div class="slide" id="slide-18">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Impact</div>
+  </div>
+  <div class="content">
+    <div class="label">18 — Social and Economic Impact</div>
+    <div class="h2">Empowering small businesses, serving communities.</div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">For customers</div>
+        <div class="check-row"><div class="check-dot yes"></div>Saves 3–5 hours per event — from days to minutes</div>
+        <div class="check-row"><div class="check-dot yes"></div>Full price transparency — no hidden fees</div>
+        <div class="check-row"><div class="check-dot yes"></div>Trusted, verified vendor reviews and accountability</div>
+        <div class="check-row"><div class="check-dot yes"></div>Better decisions with more information and comparison</div>
+        <div style="margin-top:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">For caterers (small businesses)</div>
+        <div class="check-row"><div class="check-dot yes"></div>Increased revenue and digital visibility without big marketing spend</div>
+        <div class="check-row"><div class="check-dot yes"></div>Tools that level the playing field versus large catering chains</div>
+        <div class="check-row"><div class="check-dot yes"></div>Surfaces diverse, immigrant, and ethnic-cuisine caterers</div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:14px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;">Broader Canadian impact</div>
+          <div class="blockquote">CaterBridge supports Canada's small business ecosystem by giving every caterer — regardless of size — a fair shot at digital customers.</div>
+        </div>
+        <div class="card">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Edmonton and University of Alberta</div>
+          <div class="check-row"><div class="check-dot yes"></div>University campus is our first captive market — student events, faculty catering, international community</div>
+          <div class="check-row"><div class="check-dot yes"></div>Edmonton's diverse immigrant community is underserved — rich cuisine variety waiting to be discovered</div>
+          <div class="check-row" style="border:none;"><div class="check-dot yes"></div>Every dollar generates measurable local economic value</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 19 — TEAM
+══════════════════════════════════════ -->
+<div class="slide" id="slide-19">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">The Team</div>
+  </div>
+  <div class="content">
+    <div class="label">19 — Founding Team</div>
+    <div class="h2">Builders, not just dreamers.</div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card" style="border-color:var(--orange);border-width:1.5px;">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:white;flex-shrink:0;">P</div>
+          <div>
+            <div style="font-size:18px;font-weight:800;letter-spacing:-0.3px;color:var(--ink);">Pranav NS</div>
+            <div style="font-size:13px;color:var(--orange);font-weight:600;">Founder and CEO</div>
+            <div style="font-size:13px;color:var(--muted);">University of Alberta</div>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Responsibilities</div>
+        <div class="check-row"><div class="check-dot yes"></div>Built entire CaterBridge MVP from scratch</div>
+        <div class="check-row"><div class="check-dot yes"></div>React, Node.js, AWS, MongoDB — full-stack expertise</div>
+        <div class="check-row"><div class="check-dot yes"></div>AI integration, product design, and architecture</div>
+        <div class="check-row"><div class="check-dot yes"></div>Deep personal understanding of the problem space</div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--bg-dark);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:var(--muted);flex-shrink:0;">Co</div>
+          <div>
+            <div style="font-size:18px;font-weight:800;letter-spacing:-0.3px;color:var(--ink);">Co-Founder</div>
+            <div style="font-size:13px;color:var(--muted);font-weight:600;">CTO and Operations</div>
+            <div style="font-size:13px;color:var(--muted);">University of Alberta</div>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:10px;">Responsibilities</div>
+        <div class="check-row"><div class="check-dot yes"></div>Technical architecture and backend systems</div>
+        <div class="check-row"><div class="check-dot yes"></div>Platform operations and vendor relations</div>
+        <div class="check-row"><div class="check-dot yes"></div>Business development and partnership building</div>
+        <div class="check-row"><div class="check-dot yes"></div>Market research and go-to-market execution</div>
+      </div>
+    </div>
+    <div class="card card-sm" style="margin-top:14px;">
+      <div style="font-size:13px;color:var(--muted);">We are actively seeking mentors with expertise in marketplace scaling, Canadian food service, and growth marketing through the UAlberta entrepreneurship ecosystem.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 20 — FUNDING ASK
+══════════════════════════════════════ -->
+<div class="slide" id="slide-20">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Funding Request</div>
+  </div>
+  <div class="content">
+    <div class="label">20 — Funding Request</div>
+    <div class="h2">Seeking $17,000 CAD and $10,000 AWS credits.</div>
+    <div class="grid-2" style="margin-top:16px;align-items:start;">
+      <div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+          <div class="card" style="border-color:var(--orange);border-width:1.5px;padding:24px 28px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--orange);margin-bottom:6px;">Primary Funding</div>
+            <div style="font-size:44px;font-weight:900;letter-spacing:-2px;color:var(--orange);line-height:1;">$17,000 CAD</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:4px;">University of Alberta Entrepreneurship Fund</div>
+          </div>
+          <div class="card" style="padding:20px 28px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:6px;">Infrastructure Credits</div>
+            <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink);line-height:1;">$10,000 AWS</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:4px;">For cloud infrastructure scale-up</div>
+          </div>
+        </div>
+        <div class="card card-sm">
+          <div style="font-size:13px;font-style:italic;color:var(--muted);line-height:1.6;">"This funding covers the critical 6-month runway needed to go from MVP to a live, revenue-generating pilot in Edmonton."</div>
+          <div style="margin-top:8px;font-size:13px;font-weight:600;color:var(--orange);">— Pranav NS, Founder</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;">Allocation — $17,000</div>
+        <div class="hbar" style="margin-bottom:20px;">
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Product Development</span><span style="font-weight:700;color:var(--ink);">35% — $5,950</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:35%;"></div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Marketing and Customer Acquisition</span><span style="font-weight:700;color:var(--ink);">25% — $4,250</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:25%;opacity:0.75;"></div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Cloud Infrastructure</span><span style="font-weight:700;color:var(--ink);">20% — $3,400</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:20%;opacity:0.6;"></div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Legal and Compliance</span><span style="font-weight:700;color:var(--ink);">10% — $1,700</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:10%;opacity:0.45;"></div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label"><span>Vendor Acquisition and Operations</span><span style="font-weight:700;color:var(--ink);">10% — $1,700</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:10%;opacity:0.3;"></div></div>
+          </div>
+        </div>
+        <div class="card card-sm">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">This funding achieves</div>
+          <div class="check-row" style="padding:6px 0;"><div class="check-dot yes"></div>Edmonton pilot launch with 25+ caterers</div>
+          <div class="check-row" style="padding:6px 0;"><div class="check-dot yes"></div>Mobile app (iOS + Android) development</div>
+          <div class="check-row" style="padding:6px 0;border:none;"><div class="check-dot yes"></div>First 500 users and 100+ bookings</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 21 — WHY UALBERTA
+══════════════════════════════════════ -->
+<div class="slide" id="slide-21">
+  <div class="topbar">
+    <div class="topbar-logo">Cater<span>Bridge</span></div>
+    <div class="topbar-tag">Why University of Alberta</div>
+  </div>
+  <div class="content">
+    <div class="label">21 — Why University of Alberta</div>
+    <div class="h2">Not just funding — a strategic partnership.</div>
+    <div class="grid-2" style="margin-top:16px;">
+      <div>
+        <div class="check-row" style="padding:14px 0;"><div class="check-dot yes"></div><div><div style="font-weight:700;font-size:14px;margin-bottom:3px;">World-class mentorship</div><div style="font-size:13px;color:var(--muted);">Access to professors, alumni, and entrepreneurs who have built and scaled companies globally.</div></div></div>
+        <div class="check-row" style="padding:14px 0;"><div class="check-dot yes"></div><div><div style="font-weight:700;font-size:14px;margin-bottom:3px;">Industry network access</div><div style="font-size:13px;color:var(--muted);">Direct connections to Edmonton's food service businesses, event organizers, and corporate clients.</div></div></div>
+        <div class="check-row" style="padding:14px 0;"><div class="check-dot yes"></div><div><div style="font-weight:700;font-size:14px;margin-bottom:3px;">Startup ecosystem</div><div style="font-size:13px;color:var(--muted);">UAlberta incubator, Startup Edmonton, and TEC Edmonton connections accelerate our go-to-market.</div></div></div>
+        <div class="check-row" style="padding:14px 0;border:none;"><div class="check-dot yes"></div><div><div style="font-weight:700;font-size:14px;margin-bottom:3px;">Early-stage validation</div><div style="font-size:13px;color:var(--muted);">UAlberta's endorsement builds immediate credibility when approaching first caterer partners and users.</div></div></div>
+      </div>
+      <div>
+        <div class="card" style="border-color:var(--orange);margin-bottom:14px;">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;">CaterBridge is an Edmonton story</div>
+          <div class="blockquote" style="font-size:17px;">Born at UAlberta. Built for Edmonton. Scaling across Canada.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted);">
+            <div>UAlberta has 40,000+ students — our first and most accessible customer base.</div>
+            <div>University dining and student events are immediate, captive demand.</div>
+            <div>Every dollar creates measurable economic value for Edmonton and Alberta.</div>
+          </div>
+        </div>
+        <div class="card card-sm">
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;">Our commitment to UAlberta</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.7;">Monthly progress reports &nbsp;·&nbsp; Open to mentorship engagement &nbsp;·&nbsp; Committed to Edmonton pilot &nbsp;·&nbsp; Student founder success story</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+  SLIDE 22 — CLOSING
+══════════════════════════════════════ -->
+<div class="slide" id="slide-22">
+  <div class="topbar" style="background:transparent;">
+    <div class="topbar-logo" style="color:rgba(255,255,255,0.5);">Cater<span style="color:var(--orange);">Bridge</span></div>
+    <div class="topbar-tag" style="color:rgba(255,255,255,0.3);">Thank You</div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px 64px 90px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:28px;">The vision</div>
+    <div style="font-size:58px;font-weight:900;letter-spacing:-2.5px;line-height:1.05;color:white;max-width:820px;margin-bottom:32px;">Building the digital infrastructure for Canada's catering industry.</div>
+    <div style="font-size:18px;color:rgba(255,255,255,0.5);max-width:580px;line-height:1.7;margin-bottom:56px;font-weight:400;">"Our vision is to become the trusted digital bridge between millions of customers and catering businesses — starting right here in Edmonton."</div>
+    <div style="display:flex;gap:0;border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;width:fit-content;">
+      <div style="padding:16px 28px;border-right:1px solid rgba(255,255,255,0.1);">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);margin-bottom:4px;">Founder</div>
+        <div style="font-size:14px;font-weight:700;color:white;">Pranav NS</div>
+      </div>
+      <div style="padding:16px 28px;border-right:1px solid rgba(255,255,255,0.1);">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);margin-bottom:4px;">University</div>
+        <div style="font-size:14px;font-weight:700;color:white;">University of Alberta</div>
+      </div>
+      <div style="padding:16px 28px;border-right:1px solid rgba(255,255,255,0.1);">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--orange);margin-bottom:4px;">Seeking</div>
+        <div style="font-size:14px;font-weight:700;color:var(--orange);">$17,000 CAD + $10K AWS</div>
+      </div>
+      <div style="padding:16px 28px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.35);margin-bottom:4px;">Website</div>
+        <div style="font-size:14px;font-weight:700;color:white;">caterbridge.pranavns.com</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- #deck -->
+
+<!-- ── Nav bar ── -->
+<div id="nav">
+  <div class="nav-left">
+    <button class="nav-btn" id="btn-prev" onclick="go(-1)" disabled>&#8592;</button>
+    <button class="nav-btn" id="btn-next" onclick="go(1)">&#8594;</button>
+    <span class="nav-counter" id="counter">1 / 22</span>
+  </div>
+  <div style="position:absolute;left:50%;transform:translateX(-50%);">
+    <div class="prog-dots" id="dots"></div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-title" id="slide-title-label">Cover</span>
+  </div>
+</div>
+
+<script>
+const TOTAL = 22;
+const TITLES = [
+  'Cover', 'Executive Summary', 'The Problem', 'Real Scenario',
+  'Solution', 'Product Demo', 'AI Innovation', 'Market Opportunity',
+  'Competitive Landscape', 'Business Model', 'Go-To-Market', 'Validation',
+  'Traction', 'Financial Projections', 'Growth Strategy', 'Unfair Advantage',
+  'Risks and Mitigation', 'Impact', 'Team', 'Funding Request',
+  'Why UAlberta', 'Closing Vision'
+];
+let cur = 1, prev = 1, busy = false;
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+for (let i = 1; i <= TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'pdot' + (i === 1 ? ' cur' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function slide(n) { return document.getElementById('slide-' + n); }
+
+function updateUI() {
+  document.getElementById('counter').textContent = cur + ' / ' + TOTAL;
+  document.getElementById('slide-title-label').textContent = TITLES[cur - 1];
+  document.getElementById('btn-prev').disabled = cur === 1;
+  document.getElementById('btn-next').disabled = cur === TOTAL;
+  document.getElementById('pbar').style.width = ((cur / TOTAL) * 100) + '%';
+  dotsEl.querySelectorAll('.pdot').forEach((d, i) => {
+    d.classList.toggle('cur', i + 1 === cur);
+  });
+  // Nav bar color for dark slide
+  const nav = document.getElementById('nav');
+  if (cur === 22) {
+    nav.style.background = '#1a1a1a';
+    nav.style.borderTopColor = 'rgba(255,255,255,0.08)';
+    document.getElementById('counter').style.color = 'rgba(255,255,255,0.4)';
+    document.getElementById('slide-title-label').style.color = 'rgba(255,255,255,0.6)';
+  } else {
+    nav.style.background = '#FFFFFF';
+    nav.style.borderTopColor = '#E2E2E0';
+    document.getElementById('counter').style.color = '#777777';
+    document.getElementById('slide-title-label').style.color = '#111111';
+  }
+}
+
+function goTo(n) {
+  if (busy || n === cur || n < 1 || n > TOTAL) return;
+  busy = true;
+  const fromEl = slide(cur);
+  const toEl = slide(n);
+  const fwd = n > cur;
+  prev = cur;
+  cur = n;
+
+  // Setup incoming slide off-screen
+  toEl.style.transform = fwd ? 'translateX(100%)' : 'translateX(-100%)';
+  toEl.style.opacity = '1';
+  toEl.style.transition = 'none';
+  toEl.classList.add('active');
+
+  // Force reflow
+  void toEl.offsetWidth;
+
+  // Animate both
+  const dur = '0.38s';
+  const ease = 'cubic-bezier(0.4, 0, 0.2, 1)';
+  fromEl.style.transition = `transform ${dur} ${ease}, opacity ${dur} ${ease}`;
+  toEl.style.transition = `transform ${dur} ${ease}, opacity ${dur} ${ease}`;
+
+  fromEl.style.transform = fwd ? 'translateX(-100%)' : 'translateX(100%)';
+  fromEl.style.opacity = '0';
+  toEl.style.transform = 'translateX(0)';
+  toEl.style.opacity = '1';
+
+  updateUI();
+
+  setTimeout(() => {
+    fromEl.classList.remove('active');
+    fromEl.style.transform = '';
+    fromEl.style.opacity = '';
+    fromEl.style.transition = '';
+    toEl.style.transition = '';
+    busy = false;
+  }, 400);
+}
+
+function go(dir) { goTo(cur + dir); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+updateUI();
+</script>
+</body>
+</html>
